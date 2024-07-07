@@ -358,8 +358,8 @@ virtme-ng is based on virtme, written by Andy Lutomirski <luto@kernel.org>.
         "--disk",
         "-D",
         action="append",
-        metavar="PATH",
-        help="Add a file as virtio-scsi disk (can be used multiple times)",
+        help="Add a file as virtio-scsi disk (can be used multiple times).' \
+        'Use --disk=path or --disk=name=path",
     )
 
     parser.add_argument(
@@ -895,7 +895,10 @@ class KernelSource:
         if args.disk is not None:
             disk_str = ""
             for dsk in args.disk:
-                disk_str += f"--blk-disk {dsk}={dsk} "
+                dsk_item = dsk.split("=", 1)
+                name = dsk_item[0],
+                path = dsk_item[1 if len(dsk_item) == 2 else 0]
+                disk_str += f"--blk-disk {name}={path} "
             self.virtme_param["disk"] = disk_str
         else:
             self.virtme_param["disk"] = ""
