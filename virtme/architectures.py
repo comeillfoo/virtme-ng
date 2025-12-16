@@ -464,6 +464,37 @@ class Arch_s390x(Arch):
         return ["vmlinuz", "image"]
 
 
+class Arch_mips64el(Arch):
+    def __init__(self):
+        Arch.__init__(self, "mips64el")
+        self.linuxname = "mips"
+        self.defconfig_target = "jazz_defconfig"
+
+    @staticmethod
+    def qemuargs(is_native, use_kvm, use_gpu) -> list[str]:
+        ret = Arch.qemuargs(is_native, use_kvm, use_gpu)
+        ret.extend(["-M", "magnum"])
+        return ret
+
+    @staticmethod
+    def earlyconsole_args():
+        return ["earlyprintk=serial,ttyS0,115200"]
+
+    @staticmethod
+    def serial_console_args():
+        return ["ttyS0"]
+
+    @staticmethod
+    def config_base() -> list[str]:
+        return ["CONFIG_64BIT=y"]
+
+    def kimg_path(self) -> str:
+        return "vmlinux"
+
+    def img_name(self) -> list[str]:
+        return ["vmlinux"]
+
+
 ARCHES = {
     arch.virtmename: arch
     for arch in [
@@ -478,6 +509,7 @@ ARCHES = {
         Arch_riscv64(),
         Arch_sparc64(),
         Arch_s390x(),
+        Arch_mips64el(),
     ]
 }
 
