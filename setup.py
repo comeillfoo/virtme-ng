@@ -116,7 +116,7 @@ if build_virtme_ng_init:
     packages.append("virtme.guest.bin")
 
 data_files = [
-    ("/usr/share/bash-completion/completions", ["virtme-ng-prompt", "vng-prompt"]),
+    (os.getenv('VIRTUAL_ENV', '/usr') + "/share/bash-completion/completions", ["virtme-ng-prompt", "vng-prompt"]),
 ]
 if build_manpages:
     data_files.append(("/usr/share/man/man1", ["man/vng.1"]))
