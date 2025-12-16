@@ -662,6 +662,13 @@ ARCH_MAPPING = {
         "kernel_target": "Image",
         "kernel_image": "Image",
     },
+    "mips64el": {
+        "qemu_name": "mips64el",
+        "linux_name": "mips",
+        "cross_compile": "mips64el-linux-gnuabi64-",
+        "kernel_target": "vmlinux",
+        "kernel_image": "vmlinux",
+    },
     # adding a new arch? Please also update get_host_arch().
 }
 
@@ -712,6 +719,7 @@ def get_host_arch():
         "ppc64le": "ppc64el",
         "riscv64": "riscv64",
         "s390x": "s390x",
+        "mips64": "mips64el",
     }
     return arch_map.get(arch, None)
 
