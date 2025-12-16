@@ -666,8 +666,8 @@ ARCH_MAPPING = {
         "qemu_name": "mips64el",
         "linux_name": "mips",
         "cross_compile": "mips64el-linux-gnuabi64-",
-        "kernel_target": "vmlinux",
-        "kernel_image": "vmlinux",
+        "kernel_target": "vmlinuz",
+        "kernel_image": "vmlinuz",
     },
     # adding a new arch? Please also update get_host_arch().
 }

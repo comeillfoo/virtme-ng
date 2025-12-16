@@ -468,12 +468,12 @@ class Arch_mips64el(Arch):
     def __init__(self):
         Arch.__init__(self, "mips64el")
         self.linuxname = "mips"
-        self.defconfig_target = "jazz_defconfig"
+        self.defconfig_target = "malta_kvm_defconfig"
 
     @staticmethod
     def qemuargs(is_native, use_kvm, use_gpu) -> list[str]:
         ret = Arch.qemuargs(is_native, use_kvm, use_gpu)
-        ret.extend(["-M", "magnum"])
+        ret.extend(["-M", "malta", '-cpu', 'mips64dspr2'])
         return ret
 
     @staticmethod
@@ -486,13 +486,26 @@ class Arch_mips64el(Arch):
 
     @staticmethod
     def config_base() -> list[str]:
-        return ["CONFIG_64BIT=y"]
+        return [
+            "CONFIG_64BIT=y",
+            "CONFIG_CPU_MIPS64_R2=y",
+            "CONFIG_CGROUPS=y",
+            "CONFIG_BINFMT_MISC=y",
+            "CONFIG_AUTOFS_FS=y",
+            "CONFIG_AUTOFS4_FS=y",
+            "CONFIG_CONFIGFS_FS=y",
+            "CONFIG_SECURITYFS=y",
+            "CONFIG_DEBUG_FS=y",
+            "CONFIG_VIRTIO=y",
+            "CONFIG_VIRTIO_PCI=y",
+            "CONFIG_VIRTIO_NET=y",
+        ]
 
     def kimg_path(self) -> str:
-        return "vmlinux"
+        return "vmlinuz"
 
     def img_name(self) -> list[str]:
-        return ["vmlinux"]
+        return ["vmlinuz"]
 
 
 ARCHES = {
